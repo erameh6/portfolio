@@ -1606,8 +1606,6 @@ body::before {
             statObserver.observe(card);
         });
 
-
-        // Beginning
         // --- Command Line Background Generation ---
         const cmdBackgroundContainer = document.createElement('div');
         cmdBackgroundContainer.classList.add('command-line-background');
@@ -1671,7 +1669,6 @@ body::before {
             const viewportHeight = window.innerHeight;
 
             // Estimate characters per line and total lines
-            // This is a rough estimate and depends heavily on font metrics.
             const estimatedCharWidth = baseFontSize * 0.6; // Monospace chars are usually 0.6em wide
             const estimatedLineHeight = baseFontSize * baseLineHeight;
 
@@ -1683,7 +1680,6 @@ body::before {
             for (let i = 0; i < numLayers; i++) {
                 const layer = document.createElement('div');
                 layer.classList.add('command-line-layer', `layer-${i + 1}`);
-                // Ensure the content is tall enough to scroll endlessly
                 layer.textContent = generateCommandLineContent(lines * 2, columns); // Generate more content
                 cmdBackgroundContainer.appendChild(layer);
             }
@@ -1694,7 +1690,6 @@ body::before {
         cmdOverlay.classList.add('command-line-overlay');
         document.body.prepend(cmdOverlay);
 
-
         // Re-generate content on resize to adapt
         let resizeTimeout;
         window.addEventListener('resize', () => {
@@ -1704,8 +1699,6 @@ body::before {
 
         // Initial generation
         updateCommandLineLayers();
-
-        //end
     </script>
 </body>
 </html>
