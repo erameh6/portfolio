@@ -893,6 +893,150 @@
             box-shadow: 0 15px 40px rgba(0, 224, 255, 0.4);
         }
 
+        /* --- NEW: Animated Command Line Background --- */
+body {
+    background-color: var(--color-darker-bg); /* Ensure a dark base */
+    overflow-x: hidden; /* Prevent horizontal scrollbars from wide shadows */
+    position: relative; /* Needed for pseudo-element positioning */
+}
+
+/* Base for the terminal screen effect */
+body::before {
+    content: '';
+    position: fixed; /* Fixed position so it covers the whole viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* Ensure it's behind everything, even existing blobs if desired */
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%); /* Slight dark gradient overlay */
+    pointer-events: none; /* Allows clicks/interactions on elements below */
+}
+
+/* The actual animated "command lines" */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Above the body::before gradient, behind content */
+    pointer-events: none;
+    background-color: transparent; /* Main background is handled by body */
+
+    /* Simulate multiple lines of text using box-shadow */
+    /* Adjust these values to control number of lines, spacing, and content */
+    box-shadow: 
+        0 0 0 0.5px rgba(0, 255, 0, 0.05), /* Subtle scan lines */
+
+        /* Mimic various command line outputs */
+        10px 10px 0 0 rgba(0, 255, 100, 0.1), /* Starting "line" */
+        10px 40px 0 0 rgba(0, 255, 100, 0.08),
+        10px 70px 0 0 rgba(0, 255, 100, 0.12),
+        10px 100px 0 0 rgba(0, 255, 100, 0.07),
+        10px 130px 0 0 rgba(0, 255, 100, 0.1),
+        10px 160px 0 0 rgba(0, 255, 100, 0.09),
+        10px 190px 0 0 rgba(0, 255, 100, 0.11),
+        10px 220px 0 0 rgba(0, 255, 100, 0.08),
+        10px 250px 0 0 rgba(0, 255, 100, 0.1),
+        10px 280px 0 0 rgba(0, 255, 100, 0.07),
+        10px 310px 0 0 rgba(0, 255, 100, 0.1),
+        10px 340px 0 0 rgba(0, 255, 100, 0.09),
+        10px 370px 0 0 rgba(0, 255, 100, 0.11),
+        10px 400px 0 0 rgba(0, 255, 100, 0.08),
+        10px 430px 0 0 rgba(0, 255, 100, 0.1),
+        10px 460px 0 0 rgba(0, 255, 100, 0.07),
+        10px 490px 0 0 rgba(0, 255, 100, 0.1),
+        10px 520px 0 0 rgba(0, 255, 100, 0.09),
+        10px 550px 0 0 rgba(0, 255, 100, 0.11),
+        10px 580px 0 0 rgba(0, 255, 100, 0.08),
+        10px 610px 0 0 rgba(0, 255, 100, 0.1),
+        10px 640px 0 0 rgba(0, 255, 100, 0.07),
+        10px 670px 0 0 rgba(0, 255, 100, 0.1),
+        10px 700px 0 0 rgba(0, 255, 100, 0.09),
+        10px 730px 0 0 rgba(0, 255, 100, 0.11),
+        10px 760px 0 0 rgba(0, 255, 100, 0.08),
+        10px 790px 0 0 rgba(0, 255, 100, 0.1),
+        10px 820px 0 0 rgba(0, 255, 100, 0.07),
+        10px 850px 0 0 rgba(0, 255, 100, 0.1),
+        10px 880px 0 0 rgba(0, 255, 100, 0.09),
+        10px 910px 0 0 rgba(0, 255, 100, 0.11),
+        10px 940px 0 0 rgba(0, 255, 100, 0.08),
+        10px 970px 0 0 rgba(0, 255, 100, 0.1),
+        10px 1000px 0 0 rgba(0, 255, 100, 0.07),
+        10px 1030px 0 0 rgba(0, 255, 100, 0.1),
+        10px 1060px 0 0 rgba(0, 255, 100, 0.09),
+        10px 1090px 0 0 rgba(0, 255, 100, 0.11),
+        10px 1120px 0 0 rgba(0, 255, 100, 0.08),
+        10px 1150px 0 0 rgba(0, 255, 100, 0.1),
+        10px 1180px 0 0 rgba(0, 255, 100, 0.07),
+
+        /* Blinking cursor effect on a new line, always at the bottom */
+        10px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3), /* Text before cursor */
+        150px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3) inset, /* The actual cursor */
+        151px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.0) inset; /* Make cursor disappear with animation */
+
+
+    background-image: 
+        repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px), /* Horizontal grid lines */
+        repeating-linear-gradient(90deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px); /* Vertical grid lines */
+
+
+    animation: 
+        scroll-terminal 20s linear infinite, /* Continuous scrolling */
+        blink-cursor 1s steps(1, start) infinite; /* Blinking cursor */
+}
+
+@keyframes scroll-terminal {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-30px); } /* Scrolls up by the line height */
+}
+
+@keyframes blink-cursor {
+    0%, 100% { box-shadow: 
+        10px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3),
+        150px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.8) inset; /* Cursor visible */
+    }
+    50% { box-shadow: 
+        10px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3),
+        150px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.0) inset; /* Cursor invisible */
+    }
+}
+
+
+/* --- Existing blob elements should still work but might be overshadowed --- */
+/* You might want to remove them or adjust their opacity/colors to blend with the terminal theme */
+.background-blob {
+    opacity: 0.05; /* Reduce opacity to make terminal lines more prominent */
+    filter: blur(80px); /* Keep it very blurry */
+    animation: blob-move 25s infinite alternate ease-in-out; /* Slower movement */
+}
+.blob-1 { background: linear-gradient(135deg, rgba(0, 224, 255, 0.6), rgba(138, 43, 226, 0.6)); }
+.blob-2 { background: linear-gradient(-45deg, rgba(138, 43, 226, 0.6), rgba(255, 0, 119, 0.6)); }
+.blob-3 { background: linear-gradient(90deg, rgba(255, 0, 119, 0.6), rgba(0, 224, 255, 0.6)); }
+
+/* A subtle 'CRT screen' effect - optional */
+body::after {
+    /* ... existing box-shadow and animations ... */
+    background-image: 
+        /* existing grid lines */
+        repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px), /* Horizontal grid lines */
+        repeating-linear-gradient(90deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px), /* Vertical grid lines */
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), /* Scanline effect */
+        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.03), rgba(0, 0, 255, 0.03)); /* Very subtle RGB bleed */
+    background-size: 100% 100%, 100% 100%, 100% 2px, 3px 100%; /* Adjust sizes for scanlines/bleed */
+    animation: 
+        scroll-terminal 20s linear infinite,
+        blink-cursor 1s steps(1, start) infinite,
+        scanline-anim 8s linear infinite; /* New scanline animation */
+}
+
+@keyframes scanline-anim {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 0 0, 0 0, 0 100%, 0 0; } /* Only move the scanline effect */
+}
+
         /* --- Footer --- */
         .footer {
             text-align: center;
@@ -1066,7 +1210,7 @@
     <section class="hero" id="hero">
         <div class="container hero-content">
             <div class="hero-avatar">
-                <img src="https://via.placeholder.com/180/00e0ff/8a2be2?text=EV" alt="Erameh Victor"> <!-- Placeholder Image, replace with your actual photo -->
+                <img src="img/vicji.jpeg" alt="Erameh Victor"> <!-- Placeholder Image, replace with your actual photo -->
             </div>
             <h1>Hello, I'm <span>ERAMEH VICTOR</span></h1>
             <h2>Next-Gen Production Engineer | DevOps & Cloud Specialist | AI Innovator</h2>
@@ -1321,9 +1465,6 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i> <a href="mailto:victorerameh025@gmail.com">victorerameh025@gmail.com</a>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i> <a href="tel:+2348109855770">+234 810 985 5770</a>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i> Abuja, Nigeria
