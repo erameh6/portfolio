@@ -279,7 +279,87 @@
             border-right: 3px solid var(--color-accent);
             animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
         }
+/* the start */
+        /* --- Command Line Animated Background --- */
+.command-line-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Hide scrolling content outside */
+    z-index: -2; /* Below blobs, above main background */
+    pointer-events: none; /* Don't interfere with clicks */
+    background-color: var(--color-darker-bg); /* Ensure a base dark background */
+    perspective: 1000px; /* For 3D transformations */
+}
 
+/* Base style for each command line layer */
+.command-line-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: 'Cascadia Code', 'Fira Code', 'Roboto Mono', monospace; /* Monospaced font */
+    font-size: 14px; /* Adjust as needed */
+    color: rgba(0, 255, 100, 0.05); /* Very subtle green for background */
+    line-height: 1.5;
+    white-space: pre; /* Preserve whitespace and line breaks */
+    will-change: transform, opacity; /* Optimize animations */
+    text-shadow: 0 0 5px rgba(0, 255, 100, 0.05);
+}
+
+.command-line-layer.layer-1 {
+    animation: cmd-scroll 60s linear infinite;
+    color: rgba(0, 255, 100, 0.04); /* More subtle */
+    transform: translateZ(-200px) scale(0.8); /* Further back, smaller */
+    animation-delay: 0s;
+}
+.command-line-layer.layer-2 {
+    animation: cmd-scroll 45s linear infinite reverse; /* Opposite direction, faster */
+    color: rgba(0, 200, 255, 0.03); /* Blueish tint */
+    transform: translateZ(-100px) scale(0.9); /* Closer, slightly larger */
+    animation-delay: 5s;
+}
+.command-line-layer.layer-3 {
+    animation: cmd-scroll 70s linear infinite;
+    color: rgba(255, 0, 119, 0.02); /* Magenta tint, most subtle */
+    transform: translateZ(-300px) scale(0.7); /* Furthest back, smallest */
+    animation-delay: 10s;
+}
+
+/* Animation for scrolling the content */
+@keyframes cmd-scroll {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-100%); } /* Scrolls content up */
+}
+/* If you want it to scroll from left to right instead */
+/*
+@keyframes cmd-scroll-x {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}
+*/
+
+
+/* --- Optional: Add a subtle overlay to fade top/bottom --- */
+.command-line-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Above command lines, below blobs/content */
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(5, 7, 26, 0.8) 0%,
+        rgba(5, 7, 26, 0.2) 20%,
+        rgba(5, 7, 26, 0.2) 80%,
+        rgba(5, 7, 26, 0.8) 100%
+    );
+}
+/* the end */
+        
         /* Typing animation */
         @keyframes typing {
             from { width: 0 }
@@ -913,130 +993,6 @@ body::before {
     pointer-events: none; /* Allows clicks/interactions on elements below */
 }
 
-/* The actual animated "command lines" */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Above the body::before gradient, behind content */
-    pointer-events: none;
-    background-color: transparent; /* Main background is handled by body */
-
-    /* Simulate multiple lines of text using box-shadow */
-    /* Adjust these values to control number of lines, spacing, and content */
-    box-shadow: 
-        0 0 0 0.5px rgba(0, 255, 0, 0.05), /* Subtle scan lines */
-
-        /* Mimic various command line outputs */
-        10px 10px 0 0 rgba(0, 255, 100, 0.1), /* Starting "line" */
-        10px 40px 0 0 rgba(0, 255, 100, 0.08),
-        10px 70px 0 0 rgba(0, 255, 100, 0.12),
-        10px 100px 0 0 rgba(0, 255, 100, 0.07),
-        10px 130px 0 0 rgba(0, 255, 100, 0.1),
-        10px 160px 0 0 rgba(0, 255, 100, 0.09),
-        10px 190px 0 0 rgba(0, 255, 100, 0.11),
-        10px 220px 0 0 rgba(0, 255, 100, 0.08),
-        10px 250px 0 0 rgba(0, 255, 100, 0.1),
-        10px 280px 0 0 rgba(0, 255, 100, 0.07),
-        10px 310px 0 0 rgba(0, 255, 100, 0.1),
-        10px 340px 0 0 rgba(0, 255, 100, 0.09),
-        10px 370px 0 0 rgba(0, 255, 100, 0.11),
-        10px 400px 0 0 rgba(0, 255, 100, 0.08),
-        10px 430px 0 0 rgba(0, 255, 100, 0.1),
-        10px 460px 0 0 rgba(0, 255, 100, 0.07),
-        10px 490px 0 0 rgba(0, 255, 100, 0.1),
-        10px 520px 0 0 rgba(0, 255, 100, 0.09),
-        10px 550px 0 0 rgba(0, 255, 100, 0.11),
-        10px 580px 0 0 rgba(0, 255, 100, 0.08),
-        10px 610px 0 0 rgba(0, 255, 100, 0.1),
-        10px 640px 0 0 rgba(0, 255, 100, 0.07),
-        10px 670px 0 0 rgba(0, 255, 100, 0.1),
-        10px 700px 0 0 rgba(0, 255, 100, 0.09),
-        10px 730px 0 0 rgba(0, 255, 100, 0.11),
-        10px 760px 0 0 rgba(0, 255, 100, 0.08),
-        10px 790px 0 0 rgba(0, 255, 100, 0.1),
-        10px 820px 0 0 rgba(0, 255, 100, 0.07),
-        10px 850px 0 0 rgba(0, 255, 100, 0.1),
-        10px 880px 0 0 rgba(0, 255, 100, 0.09),
-        10px 910px 0 0 rgba(0, 255, 100, 0.11),
-        10px 940px 0 0 rgba(0, 255, 100, 0.08),
-        10px 970px 0 0 rgba(0, 255, 100, 0.1),
-        10px 1000px 0 0 rgba(0, 255, 100, 0.07),
-        10px 1030px 0 0 rgba(0, 255, 100, 0.1),
-        10px 1060px 0 0 rgba(0, 255, 100, 0.09),
-        10px 1090px 0 0 rgba(0, 255, 100, 0.11),
-        10px 1120px 0 0 rgba(0, 255, 100, 0.08),
-        10px 1150px 0 0 rgba(0, 255, 100, 0.1),
-        10px 1180px 0 0 rgba(0, 255, 100, 0.07),
-
-        /* Blinking cursor effect on a new line, always at the bottom */
-        10px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3), /* Text before cursor */
-        150px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3) inset, /* The actual cursor */
-        151px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.0) inset; /* Make cursor disappear with animation */
-
-
-    background-image: 
-        repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px), /* Horizontal grid lines */
-        repeating-linear-gradient(90deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px); /* Vertical grid lines */
-
-
-    animation: 
-        scroll-terminal 20s linear infinite, /* Continuous scrolling */
-        blink-cursor 1s steps(1, start) infinite; /* Blinking cursor */
-}
-
-@keyframes scroll-terminal {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-30px); } /* Scrolls up by the line height */
-}
-
-@keyframes blink-cursor {
-    0%, 100% { box-shadow: 
-        10px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3),
-        150px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.8) inset; /* Cursor visible */
-    }
-    50% { box-shadow: 
-        10px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.3),
-        150px calc(100vh - 50px) 0 0 rgba(0, 255, 100, 0.0) inset; /* Cursor invisible */
-    }
-}
-
-
-/* --- Existing blob elements should still work but might be overshadowed --- */
-/* You might want to remove them or adjust their opacity/colors to blend with the terminal theme */
-.background-blob {
-    opacity: 0.05; /* Reduce opacity to make terminal lines more prominent */
-    filter: blur(80px); /* Keep it very blurry */
-    animation: blob-move 25s infinite alternate ease-in-out; /* Slower movement */
-}
-.blob-1 { background: linear-gradient(135deg, rgba(0, 224, 255, 0.6), rgba(138, 43, 226, 0.6)); }
-.blob-2 { background: linear-gradient(-45deg, rgba(138, 43, 226, 0.6), rgba(255, 0, 119, 0.6)); }
-.blob-3 { background: linear-gradient(90deg, rgba(255, 0, 119, 0.6), rgba(0, 224, 255, 0.6)); }
-
-/* A subtle 'CRT screen' effect - optional */
-body::after {
-    /* ... existing box-shadow and animations ... */
-    background-image: 
-        /* existing grid lines */
-        repeating-linear-gradient(0deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px), /* Horizontal grid lines */
-        repeating-linear-gradient(90deg, rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.02) 1px, transparent 1px, transparent 30px), /* Vertical grid lines */
-        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), /* Scanline effect */
-        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.03), rgba(0, 0, 255, 0.03)); /* Very subtle RGB bleed */
-    background-size: 100% 100%, 100% 100%, 100% 2px, 3px 100%; /* Adjust sizes for scanlines/bleed */
-    animation: 
-        scroll-terminal 20s linear infinite,
-        blink-cursor 1s steps(1, start) infinite,
-        scanline-anim 8s linear infinite; /* New scanline animation */
-}
-
-@keyframes scanline-anim {
-    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-    100% { background-position: 0 0, 0 0, 0 100%, 0 0; } /* Only move the scanline effect */
-}
-
         /* --- Footer --- */
         .footer {
             text-align: center;
@@ -1649,6 +1605,107 @@ body::after {
             card.style.transition = `opacity 0.5s ease-out ${index * 0.1}s, transform 0.5s ease-out ${index * 0.1}s`;
             statObserver.observe(card);
         });
+
+
+        // Beginning
+        // --- Command Line Background Generation ---
+        const cmdBackgroundContainer = document.createElement('div');
+        cmdBackgroundContainer.classList.add('command-line-background');
+        document.body.prepend(cmdBackgroundContainer);
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>/?`~';
+        const symbols = '/*-+_=$&%!#^@~`'; // More typical 'hacking' symbols
+        const keywords = ['function', 'const', 'let', 'return', 'import', 'export', 'class', 'public', 'private', 'static', 'void', 'main', 'System.out.println', 'console.log', 'git commit', 'sudo apt-get install', 'docker run', 'kubectl apply', 'aws s3 cp', 'terraform apply'];
+
+        function getRandomChar() {
+            return characters[Math.floor(Math.random() * characters.length)];
+        }
+        function getRandomSymbol() {
+            return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+        function getRandomKeyword() {
+            return keywords[Math.floor(Math.random() * keywords.length)];
+        }
+
+        function generateCommandLineContent(lines, columns) {
+            let content = '';
+            for (let i = 0; i < lines; i++) {
+                let line = '';
+                const lineType = Math.random();
+
+                if (lineType < 0.3) { // 30% chance for a keyword line
+                    line += getRandomKeyword() + ' ';
+                    const remainingChars = columns - line.length;
+                    for (let j = 0; j < remainingChars; j++) {
+                        line += Math.random() < 0.8 ? getRandomChar() : ' '; // More spaces
+                    }
+                } else if (lineType < 0.6) { // 30% chance for a variable-like line
+                    line += '$' + (Math.random() > 0.5 ? 'VAR_' : '') + Math.random().toString(36).substring(2, 6).toUpperCase() + '=';
+                    const remainingChars = columns - line.length;
+                     for (let j = 0; j < remainingChars; j++) {
+                        line += Math.random() < 0.7 ? getRandomChar() : ' ';
+                    }
+                } else { // 40% chance for random characters/symbols
+                    for (let j = 0; j < columns; j++) {
+                        if (Math.random() < 0.05) { // Occasional symbol
+                            line += getRandomSymbol();
+                        } else if (Math.random() < 0.7) { // More random characters
+                            line += getRandomChar();
+                        } else { // Some spaces
+                            line += ' ';
+                        }
+                    }
+                }
+                content += line + '\n';
+            }
+            return content;
+        }
+
+        const numLayers = 3;
+        const baseFontSize = 14; // Matches CSS
+        const baseLineHeight = 1.5; // Matches CSS
+
+        // Calculate visible lines and columns dynamically
+        function updateCommandLineLayers() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Estimate characters per line and total lines
+            // This is a rough estimate and depends heavily on font metrics.
+            const estimatedCharWidth = baseFontSize * 0.6; // Monospace chars are usually 0.6em wide
+            const estimatedLineHeight = baseFontSize * baseLineHeight;
+
+            const columns = Math.floor(viewportWidth / estimatedCharWidth);
+            const lines = Math.floor(viewportHeight / estimatedLineHeight) * 2; // Need double for scrolling
+
+            cmdBackgroundContainer.innerHTML = ''; // Clear previous layers
+
+            for (let i = 0; i < numLayers; i++) {
+                const layer = document.createElement('div');
+                layer.classList.add('command-line-layer', `layer-${i + 1}`);
+                // Ensure the content is tall enough to scroll endlessly
+                layer.textContent = generateCommandLineContent(lines * 2, columns); // Generate more content
+                cmdBackgroundContainer.appendChild(layer);
+            }
+        }
+
+        // Add the overlay
+        const cmdOverlay = document.createElement('div');
+        cmdOverlay.classList.add('command-line-overlay');
+        document.body.prepend(cmdOverlay);
+
+
+        // Re-generate content on resize to adapt
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateCommandLineLayers, 200); // Debounce resize
+        });
+
+        // Initial generation
+        updateCommandLineLayers();
+
+        //end
     </script>
 </body>
 </html>
