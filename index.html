@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erameh Victor | Production Engineer & DevOps Specialist</title>
+    <title>Erameh Victor | Next-Gen Production & DevOps Engineer</title>
+    <!-- Google Fonts: Montserrat (bold) and Inter (body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts for a professional look -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* General Reset & Base Styles */
+        /* CSS Reset & Variables */
         * {
             margin: 0;
             padding: 0;
@@ -17,17 +17,24 @@
         }
 
         :root {
-            --primary: #00d4ff; /* Lighter Blue */
-            --secondary: #0066ff; /* Deeper Blue */
-            --accent: #ff00c3; /* A vibrant pink for contrast */
-            --dark: #0a0e27; /* Dark navy */
-            --darker: #050816; /* Even darker, almost black */
-            --light: #f8f9fa; /* Off-white */
-            --text: #e4e4e7; /* Light grey for body text */
-            --text-muted: #a1a1aa; /* Muted grey for secondary text */
-            --gradient-main: linear-gradient(135deg, var(--primary), var(--secondary));
-            --gradient-hover: linear-gradient(135deg, var(--secondary), var(--primary));
-            --gradient-alt: linear-gradient(45deg, var(--primary), var(--accent));
+            --color-primary: #00e0ff; /* Bright Cyan */
+            --color-secondary: #8a2be2; /* Blue Violet / Purple */
+            --color-accent: #ff0077;   /* Vibrant Magenta */
+            --color-dark-bg: #0d0f20;  /* Deep Dark Blue */
+            --color-darker-bg: #05071a; /* Even Deeper Blue */
+            --color-text-light: #e0e0e0; /* Light Grey Text */
+            --color-text-muted: #a0a0b0; /* Muted Grey Text */
+
+            --gradient-main: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            --gradient-accent: linear-gradient(45deg, var(--color-secondary), var(--color-accent));
+            --gradient-text: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+
+            --border-radius-lg: 15px;
+            --border-radius-sm: 8px;
+
+            --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 25px rgba(0, 224, 255, 0.4);
         }
 
         html {
@@ -35,777 +42,873 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif; /* Modern font */
-            background: var(--darker);
-            color: var(--text);
-            line-height: 1.8; /* Increased for readability */
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-darker-bg);
+            color: var(--color-text-light);
+            line-height: 1.7;
             overflow-x: hidden;
             position: relative;
-            background-attachment: fixed; /* Keep background fixed */
-            background-image: radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.02) 0%, transparent 50%),
-                              radial-gradient(circle at 90% 80%, rgba(0, 102, 255, 0.02) 0%, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Background Particle/Gradient Effects */
-        .gradient-blob {
-            position: absolute;
+        /* --- Global Background Elements & Animations --- */
+        .background-blob {
+            position: fixed;
             border-radius: 50%;
-            opacity: 0.15;
-            filter: blur(80px); /* Soft glow */
+            opacity: 0.1;
+            filter: blur(100px);
             z-index: -1;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-            animation-direction: alternate;
+            animation: blob-move 20s infinite alternate ease-in-out;
+            pointer-events: none;
         }
 
         .blob-1 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            top: 10%;
-            left: -100px;
-            animation-name: moveGradient1;
-            animation-duration: 18s;
-        }
-
-        .blob-2 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(180deg, var(--secondary), var(--accent));
-            bottom: 5%;
-            right: -150px;
-            animation-name: moveGradient2;
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            top: -100px; left: -200px;
             animation-duration: 22s;
         }
-
+        .blob-2 {
+            width: 600px; height: 600px;
+            background: linear-gradient(-45deg, var(--color-secondary), var(--color-accent));
+            bottom: -150px; right: -250px;
+            animation-duration: 25s;
+            animation-delay: 2s;
+        }
         .blob-3 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(45deg, var(--accent), var(--primary));
-            top: 60%;
-            left: 20%;
-            animation-name: moveGradient3;
-            animation-duration: 15s;
-            opacity: 0.1;
+            width: 400px; height: 400px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+            top: 50%; left: 30%;
+            transform: translate(-50%, -50%);
+            animation-duration: 18s;
+            animation-delay: 4s;
+            opacity: 0.08;
         }
 
-        @keyframes moveGradient1 {
+        @keyframes blob-move {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(150px, 80px) scale(1.1); }
+            33% { transform: translate(50px, -80px) scale(1.1); }
+            66% { transform: translate(-70px, 40px) scale(0.9); }
             100% { transform: translate(0, 0) scale(1); }
         }
 
-        @keyframes moveGradient2 {
-            0% { transform: translate(0, 0) scale(1.1); }
-            50% { transform: translate(-100px, -60px) scale(1); }
-            100% { transform: translate(0, 0) scale(1.1); }
-        }
-
-        @keyframes moveGradient3 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-50px, 100px) scale(1.2); }
-            100% { transform: translate(0, 0) scale(1); }
-        }
-
-        /* Navigation Bar */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(5, 8, 22, 0.98); /* Darker, slightly transparent */
-            backdrop-filter: blur(15px); /* Stronger blur */
-            z-index: 1000;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 212, 255, 0.15); /* More prominent border */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
-            transition: all 0.3s ease-in-out;
-        }
-
-        .nav.scrolled {
-            padding: 0.75rem 0;
-            background: rgba(5, 8, 22, 0.99);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-content {
+        /* --- Utility Classes --- */
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2.5rem; /* Increased padding */
+            padding: 0 2rem;
+        }
+
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        .text-gradient {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* --- Navigation Bar --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 7, 26, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+            border-bottom: 1px solid rgba(0, 224, 255, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .navbar.scrolled {
+            padding: 0.75rem 0;
+            background: rgba(5, 7, 26, 0.95);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .navbar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.8rem; /* Larger logo */
-            font-weight: 700;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
             letter-spacing: 1px;
-            transition: transform 0.3s ease, font-size 0.3s ease;
+            color: var(--color-primary); /* Base color for logo */
+            transition: all 0.3s ease;
         }
-
         .logo:hover {
             transform: scale(1.05);
-        }
-
-        .nav.scrolled .logo {
-            font-size: 1.6rem;
+            color: var(--color-accent); /* Hover effect */
+            text-shadow: 0 0 15px var(--color-primary);
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem; /* Increased gap */
             list-style: none;
+            gap: 2.5rem;
         }
-
         .nav-links a {
-            color: var(--text);
+            color: var(--color-text-light);
             text-decoration: none;
-            transition: all 0.3s ease-in-out;
             font-weight: 500;
             position: relative;
             padding: 0.5rem 0;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
-
         .nav-links a i {
-            font-size: 1rem;
-            color: var(--primary);
+            color: var(--color-primary);
             transition: color 0.3s ease;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
             width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: all 0.3s ease-in-out;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
             transform: translateX(-50%);
+            transition: width 0.3s ease;
         }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--color-primary);
+        }
+        .nav-links a:hover i, .nav-links a.active i {
+            color: var(--color-accent);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after {
             width: 100%;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--primary);
-        }
-        .nav-links a:hover i,
-        .nav-links a.active i {
-            color: var(--accent);
-        }
-
-        /* Hero Section */
+        /* --- Hero Section --- */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
-            padding: 0 2rem;
             text-align: center;
-            background: radial-gradient(circle at top left, rgba(0, 212, 255, 0.05), transparent 60%);
-        }
-
-        .hero::before { /* Animated background blob */
-            content: '';
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.1), rgba(0, 102, 255, 0.05), transparent);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            animation: heroBlob 12s infinite alternate ease-in-out;
-            z-index: 0;
-            filter: blur(100px);
-        }
-
-        @keyframes heroBlob {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
-            50% { transform: translate(-50%, -55%) scale(1); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
+            overflow: hidden;
+            padding: 10rem 0 5rem 0; /* Adjust padding for fixed navbar */
         }
 
         .hero-content {
-            max-width: 900px; /* Wider content area */
-            text-align: center;
+            max-width: 900px;
             z-index: 1;
-            position: relative;
+        }
+
+        .hero-avatar { /* New circular image in hero */
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 2.5rem auto;
+            border: 4px solid var(--color-primary);
+            box-shadow: var(--shadow-glow);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(-20px);
+            animation: float-avatar 8s infinite ease-in-out;
+        }
+        .hero-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-avatar:hover {
+            transform: scale(1.08) translateY(-25px);
+            box-shadow: 0 0 35px var(--color-primary);
+        }
+
+        @keyframes float-avatar {
+            0% { transform: translateY(-20px) rotate(0deg); }
+            50% { transform: translateY(0px) rotate(3deg); }
+            100% { transform: translateY(-20px) rotate(0deg); }
         }
 
         .hero h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 5rem; /* Larger font size */
+            font-size: 4.8rem;
+            font-weight: 900;
             margin-bottom: 1rem;
+            line-height: 1.1;
+            text-shadow: 0 0 20px rgba(0, 224, 255, 0.3);
+        }
+        .hero h1 span {
+            display: block; /* Force name to new line */
             background: var(--gradient-main);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: fadeInUp 1s ease-out;
-            font-weight: 800; /* Bolder */
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3); /* Text glow */
-            line-height: 1.2;
         }
 
         .hero h2 {
-            font-size: 1.8rem; /* Larger sub-heading */
-            color: var(--text-muted);
+            font-size: 1.7rem;
+            color: var(--color-text-muted);
             margin-bottom: 1.5rem;
-            font-weight: 500;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            font-weight: 400;
             letter-spacing: 0.5px;
         }
 
-        .hero-subtitle {
-            font-size: 1.3rem; /* Larger subtitle */
-            color: var(--text);
+        .typing-container {
+            min-height: 3rem; /* Ensure space for typing animation */
+        }
+        .typing-effect {
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            min-height: 2.5rem; /* Reserve space */
             margin-bottom: 3.5rem;
-            animation: fadeInUp 1s ease-out 0.4s both;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid var(--color-accent);
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        /* Typing animation */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        /* Blink caret animation */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--color-accent) }
+        }
+
+        .hero-subtitle-meta {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 3.5rem;
             font-weight: 300;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 2rem;
         }
-        .hero-subtitle i {
-            color: var(--accent);
-            font-size: 1.5rem;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-subtitle-meta i {
+            color: var(--color-accent);
+            font-size: 1.3rem;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 2rem; /* Increased gap */
+            gap: 1.8rem;
             justify-content: center;
-            animation: fadeInUp 1s ease-out 0.6s both;
         }
 
         .btn {
-            padding: 1.1rem 3rem; /* More prominent buttons */
+            padding: 1.1rem 2.8rem;
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem; /* Larger font */
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* Smoother transition */
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             text-decoration: none;
-            display: inline-flex; /* Use flex for icon alignment */
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem; /* Gap between text and icon */
+            gap: 0.7rem;
             position: relative;
-            overflow: hidden; /* For hover effect */
+            overflow: hidden;
+            letter-spacing: 0.5px;
         }
-
         .btn i {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .btn-primary {
             background: var(--gradient-main);
-            color: white;
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+            color: var(--color-darker-bg);
+            box-shadow: 0 8px 25px rgba(0, 224, 255, 0.4);
         }
-
+        .btn-primary::before { /* Inner glow effect on hover */
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: 0;
+        }
+        .btn-primary:hover::before {
+            width: 200%; height: 200%;
+        }
+        .btn-primary span { /* Ensure text is above glow */
+            position: relative;
+            z-index: 1;
+        }
         .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
-            background: var(--gradient-hover); /* Invert gradient on hover */
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0, 224, 255, 0.6);
         }
 
         .btn-secondary {
             background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
         }
-
         .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--darker);
-            border-color: var(--primary); /* Maintain border color consistency */
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+            background: var(--gradient-main);
+            color: var(--color-darker-bg);
+            border-color: var(--color-primary);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.3);
         }
 
-        /* Section Styling */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 8rem 2.5rem; /* More vertical padding */
-            position: relative;
-            opacity: 0; /* For scroll animation */
-            transform: translateY(30px); /* For scroll animation */
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-
+        /* --- Section Titles --- */
         .section-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3.5rem; /* Larger title */
-            margin-bottom: 4rem; /* More space below title */
+            font-size: 3.5rem;
+            font-weight: 800;
             text-align: center;
+            margin-bottom: 5rem;
             position: relative;
-            font-weight: 700;
-            background: var(--gradient-main);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -15px; /* Adjust line position */
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px; /* Longer line */
-            height: 5px; /* Thicker line */
-            background: var(--gradient-main);
-            border-radius: 3px;
+            width: 90px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
         }
 
-        /* About Section */
-        .about-content {
+        /* --- About Section --- */
+        .about-grid {
             display: grid;
-            grid-template-columns: 3fr 2fr; /* Adjusted column ratio */
-            gap: 5rem; /* Increased gap */
+            grid-template-columns: 1fr 1.2fr; /* Text wider than image/stats */
+            gap: 5rem;
             align-items: center;
         }
-
         .about-text p {
-            margin-bottom: 1.8rem; /* More space between paragraphs */
-            color: var(--text-muted);
-            font-size: 1.15rem; /* Slightly larger text */
+            font-size: 1.15rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.8rem;
             line-height: 1.8;
         }
 
-        .stats {
+        .stats-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns for stats */
-            gap: 2.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid for stats */
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         .stat-card {
+            background: rgba(0, 224, 255, 0.08); /* Transparent background */
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: var(--border-radius-lg);
+            padding: 1.8rem 1.2rem;
             text-align: center;
-            padding: 2.5rem; /* More padding */
-            background: rgba(0, 212, 255, 0.07); /* Slightly darker background */
-            border-radius: 20px; /* More rounded corners */
-            border: 1px solid rgba(0, 212, 255, 0.15);
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-md);
         }
-        
-        .stat-card::before {
+        .stat-card::before { /* Subtle internal glow */
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 10% 10%, rgba(0, 212, 255, 0.05), transparent 50%);
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.1), transparent 70%);
+            transition: opacity 0.5s ease;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 0;
         }
-
         .stat-card:hover::before {
             opacity: 1;
         }
-
         .stat-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+            transform: translateY(-8px) scale(1.03);
+            border-color: var(--color-accent);
+            box-shadow: 0 12px 35px rgba(0, 224, 255, 0.3);
         }
 
-        .stat-icon { /* New element for icons in stats */
+        .stat-icon {
             font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            animation: pulseIcon 2s infinite ease-in-out;
+            color: var(--color-accent);
+            margin-bottom: 0.8rem;
+            animation: pulse-icon 2s infinite ease-in-out;
+            position: relative;
+            z-index: 1;
         }
-
-        @keyframes pulseIcon {
+        @keyframes pulse-icon {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.1); color: var(--color-primary); }
         }
 
         .stat-number {
-            font-size: 3rem; /* Larger number */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
             font-weight: 700;
             background: var(--gradient-main);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1; /* Ensure tight line height for numbers/text */
+            white-space: nowrap; /* Prevent breaking "AWS" */
+            overflow: hidden; /* Hide if text is still too wide */
+            text-overflow: clip; /* Clip instead of ellipsis if overflow occurs */
+        }
+        /* Specific fix for AWS display if it's still an issue */
+        .stat-card .stat-number.aws-fix {
+            font-size: 2.2rem; /* Adjusted size for "AWS" specifically */
         }
 
         .stat-label {
-            color: var(--text-muted);
-            margin-top: 0.8rem;
-            font-size: 1rem;
+            color: var(--color-text-muted);
+            margin-top: 0.6rem;
+            font-size: 0.95rem;
             font-weight: 500;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Experience Section */
+        /* --- Experience Section --- */
         .experience-grid {
             display: grid;
-            gap: 3rem; /* More space between cards */
+            gap: 3rem;
+            position: relative;
+            padding-left: 2rem; /* Space for timeline effect */
+        }
+        .experience-grid::before { /* Vertical timeline line */
+            content: '';
+            position: absolute;
+            left: 2.7rem; /* Align with dots */
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+            border-radius: 2px;
+            z-index: 0;
         }
 
         .experience-card {
-            background: rgba(0, 212, 255, 0.05); /* Slightly more opaque */
+            background: rgba(255, 255, 255, 0.05); /* Lighter transparent background */
+            border: 1px solid rgba(0, 224, 255, 0.15);
+            border-radius: var(--border-radius-lg);
             padding: 2.5rem;
-            border-radius: 20px;
-            border-left: 5px solid var(--primary); /* Thicker border */
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-md);
             position: relative;
-            overflow: hidden;
+            margin-left: 2rem; /* Space for the timeline dot */
+            z-index: 1;
+            /* 3D tilt on hover */
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg) scale(1);
         }
-
-        .experience-card::before { /* Subtle background pattern */
+        .experience-card::before { /* Timeline dot */
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="1.5" fill="%2300d4ff" opacity="0.1"/></svg>');
-            background-size: 20px 20px;
-            opacity: 0.05;
-            transition: opacity 0.3s ease;
+            left: -4.3rem; /* Position relative to the timeline line */
+            top: 3rem;
+            width: 18px;
+            height: 18px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            border: 3px solid var(--color-darker-bg); /* Matches body background */
+            box-shadow: 0 0 0 5px rgba(255, 0, 119, 0.3);
+            z-index: 2;
         }
-
-        .experience-card:hover::before {
-            opacity: 0.15;
-        }
-
         .experience-card:hover {
-            transform: translateX(15px) translateY(-5px); /* More pronounced hover */
-            background: rgba(0, 212, 255, 0.12); /* Darker on hover */
-            border-left-color: var(--accent); /* Change border color on hover */
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+            transform: translateY(-10px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border-color: var(--color-accent);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .experience-header {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Align vertically */
+            align-items: flex-start;
             margin-bottom: 1.5rem;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            flex-wrap: wrap;
             gap: 1rem;
         }
-
-        .experience-header div {
+        .experience-header > div {
             flex-grow: 1;
         }
 
         .experience-title {
-            font-size: 1.6rem;
-            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
             margin-bottom: 0.5rem;
-            font-weight: 600;
         }
-
         .experience-company {
             font-size: 1.2rem;
-            color: var(--text);
+            color: var(--color-text-light);
             margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-
+        .experience-company i {
+            color: var(--color-accent);
+        }
         .experience-duration {
-            color: var(--text-muted);
-            font-size: 1rem;
-            font-weight: 400;
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .experience-duration i {
+            color: var(--color-primary);
         }
 
         .experience-type {
-            background: var(--gradient-main);
-            padding: 0.4rem 1.2rem;
+            background: var(--gradient-accent);
+            padding: 0.5rem 1.2rem;
             border-radius: 25px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: white;
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 2px 10px rgba(255, 0, 119, 0.3);
         }
 
         .experience-description {
-            color: var(--text-muted);
-            line-height: 1.9;
+            color: var(--color-text-muted);
+            line-height: 1.8;
             font-size: 1.05rem;
         }
 
-        /* Skills Section */
+        /* --- Skills Section --- */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider min width */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
         }
-
         .skill-category {
-            background: rgba(0, 212, 255, 0.05);
+            background: rgba(0, 224, 255, 0.07);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            border-radius: var(--border-radius-lg);
             padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 212, 255, 0.15);
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-md);
         }
-
         .skill-category:hover {
             transform: translateY(-8px);
-            border-color: var(--accent); /* Highlight with accent color */
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+            border-color: var(--color-accent);
+            box-shadow: 0 12px 35px rgba(0, 224, 255, 0.3);
+            background: rgba(0, 224, 255, 0.1);
         }
-
         .skill-category h3 {
-            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--color-primary);
             margin-bottom: 2rem;
             font-size: 1.6rem;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
         }
-
         .skill-category h3 i {
-            font-size: 1.8rem;
-            color: var(--accent);
+            font-size: 2rem;
+            color: var(--color-accent);
         }
-
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem; /* More space between tags */
+            gap: 1rem;
         }
-
         .skill-tag {
-            background: rgba(0, 212, 255, 0.15); /* Darker tag background */
-            padding: 0.7rem 1.4rem; /* More padding */
-            border-radius: 25px; /* More rounded */
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
             font-size: 0.95rem;
-            color: var(--text);
-            border: 1px solid rgba(0, 212, 255, 0.25);
+            color: var(--color-text-light);
+            border: 1px solid rgba(0, 224, 255, 0.25);
             transition: all 0.3s ease;
             cursor: pointer;
             font-weight: 500;
-            text-shadow: 0 0 5px rgba(0, 212, 255, 0.1);
         }
-
         .skill-tag:hover {
-            background: var(--primary);
-            color: var(--darker);
+            background: var(--gradient-main);
+            color: var(--color-darker-bg);
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
-            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(0, 224, 255, 0.4);
+            border-color: var(--color-primary);
         }
 
-        /* Certifications Section */
+        /* --- Certifications Section --- */
         .certifications-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min width */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
-
         .cert-card {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.07), rgba(0, 102, 255, 0.07));
+            background: rgba(0, 102, 255, 0.07); /* Slightly different background */
+            border: 1px solid rgba(0, 224, 255, 0.15);
+            border-radius: var(--border-radius-lg);
             padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 212, 255, 0.15);
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        
-        .cert-card::before { /* Corner accent */
+        .cert-card::before { /* Animated overlay */
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 50px;
-            height: 50px;
-            background: var(--accent);
-            border-bottom-left-radius: 20px;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-100%);
+            transition: transform 0.5s ease;
             z-index: 0;
         }
-
         .cert-card:hover::before {
-            opacity: 1;
+            transform: translateY(0);
         }
-
         .cert-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
-            border-color: var(--accent);
+            box-shadow: 0 12px 35px rgba(0, 224, 255, 0.3);
+            border-color: var(--color-accent);
+            background: rgba(0, 102, 255, 0.12);
         }
-
         .cert-title {
-            font-size: 1.3rem;
-            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            color: var(--color-primary);
             margin-bottom: 0.7rem;
             font-weight: 600;
-            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
             position: relative;
+            z-index: 1;
         }
-
+        .cert-title i {
+            color: var(--color-accent);
+            font-size: 1.5rem;
+        }
         .cert-issuer {
-            color: var(--text-muted);
+            color: var(--color-text-muted);
             font-size: 1rem;
             font-weight: 400;
-            z-index: 1;
             position: relative;
+            z-index: 1;
         }
 
-        /* Contact Section */
+        /* --- Projects/Initiatives Section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+        .project-card {
+            background: rgba(var(--color-secondary), 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card::before { /* Decorative top border */
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 5px;
+            background: var(--gradient-accent);
+            border-top-left-radius: var(--border-radius-lg);
+            border-top-right-radius: var(--border-radius-lg);
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.4);
+            border-color: var(--color-accent);
+            background: rgba(var(--color-secondary), 0.15);
+        }
+        .project-card .project-icon {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .project-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .project-card p {
+            font-size: 1.05rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            flex-grow: 1; /* Allow description to take available space */
+        }
+        .project-card .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto; /* Push links to the bottom */
+        }
+        .project-card .project-links a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .project-card .project-links a:hover {
+            color: var(--color-accent);
+            transform: translateX(5px);
+        }
+        .project-card .project-links a i {
+            font-size: 1rem;
+        }
+
+        /* --- Contact Section --- */
         .contact-content {
             text-align: center;
             max-width: 700px;
             margin: 0 auto;
         }
-
         .contact-content p {
             font-size: 1.15rem;
+            color: var(--color-text-muted);
             margin-bottom: 3rem;
         }
-
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.8rem;
             margin: 3rem 0;
         }
-
         .contact-item {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.2rem; /* Larger gap */
-            font-size: 1.25rem; /* Larger text */
-            color: var(--text);
-            transition: color 0.3s ease;
+            gap: 1.2rem;
+            font-size: 1.25rem;
+            color: var(--color-text-light);
         }
-
         .contact-item i {
-            font-size: 1.8rem; /* Larger icon */
-            color: var(--primary);
+            font-size: 1.8rem;
+            color: var(--color-primary);
             transition: transform 0.3s ease;
         }
-
         .contact-item:hover i {
             transform: scale(1.1);
-            color: var(--accent);
+            color: var(--color-accent);
         }
-
         .contact-item a {
-            color: var(--primary);
+            color: var(--color-primary);
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
         .contact-item a:hover {
-            color: var(--accent);
+            color: var(--color-accent);
             text-decoration: underline;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2.5rem; /* More space */
+            gap: 2.5rem;
             margin-top: 4rem;
         }
-
         .social-link {
-            width: 60px; /* Larger social buttons */
+            width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(0, 224, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 2rem; /* Larger icons */
-            border: 2px solid rgba(0, 212, 255, 0.25);
+            color: var(--color-primary);
+            font-size: 2rem;
+            border: 2px solid rgba(0, 224, 255, 0.25);
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
+            text-decoration: none; /* Ensure no underline */
         }
-
-        .social-link::before { /* Inner glow effect */
+        .social-link i {
+            position: relative;
+            z-index: 1; /* Keep icon above pseudo-element */
+        }
+        .social-link::before { /* Animated radial glow */
             content: '';
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.3), transparent 70%);
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
             opacity: 0;
-            transition: opacity 0.3s ease;
         }
-
         .social-link:hover::before {
+            width: 150%; height: 150%;
             opacity: 1;
         }
-
         .social-link:hover {
-            background: var(--primary);
-            color: var(--darker);
-            transform: translateY(-8px) rotate(5deg); /* Lift and slight rotation */
-            border-color: var(--primary);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+            background: var(--gradient-main);
+            color: var(--color-darker-bg);
+            transform: translateY(-8px) rotate(5deg);
+            border-color: var(--color-primary);
+            box-shadow: 0 15px 40px rgba(0, 224, 255, 0.4);
         }
 
-        /* Footer */
-        footer {
+        /* --- Footer --- */
+        .footer {
             text-align: center;
             padding: 2.5rem;
-            background: var(--dark);
-            color: var(--text-muted);
-            border-top: 1px solid rgba(0, 212, 255, 0.15);
+            background: var(--color-dark-bg);
+            color: var(--color-text-muted);
+            border-top: 1px solid rgba(0, 224, 255, 0.1);
             font-size: 0.95rem;
             letter-spacing: 0.5px;
+            margin-top: auto; /* Push footer to the bottom */
         }
 
-        /* Responsive Design */
+        /* --- Responsive Design --- */
         @media (max-width: 1024px) {
             .hero h1 {
-                font-size: 4rem;
+                font-size: 3.8rem;
             }
             .hero h2 {
                 font-size: 1.5rem;
@@ -813,444 +916,598 @@
             .section-title {
                 font-size: 3rem;
             }
-            .about-content {
+            .about-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
-            .stats {
-                grid-template-columns: repeat(3, 1fr); /* Back to 3 columns for tablets */
+            .hero-avatar {
+                width: 150px;
+                height: 150px;
             }
         }
 
         @media (max-width: 768px) {
-            .nav-content {
+            .navbar-content {
                 flex-direction: column;
                 gap: 1rem;
             }
             .nav-links {
-                gap: 1.5rem;
+                gap: 1.2rem;
                 flex-wrap: wrap;
                 justify-content: center;
             }
             .hero {
-                min-height: 80vh;
-                padding-top: 100px;
+                padding-top: 8rem;
+                min-height: 90vh;
             }
             .hero h1 {
-                font-size: 3rem;
+                font-size: 2.8rem;
             }
             .hero h2 {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
-            .hero-subtitle {
+            .typing-effect {
                 font-size: 1.1rem;
+                min-height: 2rem;
+            }
+            .hero-subtitle-meta {
+                flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 2.5rem;
             }
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: 1.5rem;
+                gap: 1.2rem;
             }
             .btn {
-                width: 80%;
-                max-width: 300px;
+                width: 90%;
+                max-width: 320px;
                 padding: 1rem 2rem;
+                font-size: 1rem;
             }
-            .section {
-                padding: 6rem 1.5rem;
+            .section-padding {
+                padding: 6rem 0;
             }
             .section-title {
-                font-size: 2.5rem;
-                margin-bottom: 3rem;
+                font-size: 2.2rem;
+                margin-bottom: 4rem;
             }
-            .about-content {
+            .about-grid {
                 grid-template-columns: 1fr;
             }
-            .stats {
-                grid-template-columns: 1fr; /* Stack on mobile */
+            .stats-container {
+                grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-            .experience-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .stat-card {
+                padding: 1.5rem 1rem;
             }
-            .experience-type {
-                margin-top: 1rem;
+            .stat-number {
+                font-size: 2.5rem;
             }
-            .skills-grid, .certifications-grid {
+            .stat-card .stat-number.aws-fix {
+                font-size: 2rem;
+            }
+            .experience-grid {
+                padding-left: 1.5rem;
+            }
+            .experience-grid::before {
+                left: 1.7rem;
+            }
+            .experience-card {
+                margin-left: 1.5rem;
+                padding: 2rem;
+            }
+            .experience-card::before {
+                left: -3.3rem;
+                top: 2.5rem;
+            }
+            .experience-title {
+                font-size: 1.5rem;
+            }
+            .skills-grid, .certifications-grid, .projects-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
             .contact-info {
-                gap: 1rem;
+                gap: 1.5rem;
             }
             .social-links {
-                gap: 1.5rem;
+                gap: 2rem;
             }
             .social-link {
                 width: 50px;
                 height: 50px;
+                font-size: 1.8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero h2 {
+                font-size: 1rem;
+            }
+            .typing-effect {
+                font-size: 0.95rem;
+            }
+            .logo {
                 font-size: 1.5rem;
+            }
+            .nav-links {
+                gap: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="gradient-blob blob-1"></div>
-    <div class="gradient-blob blob-2"></div>
-    <div class="gradient-blob blob-3"></div>
+    <!-- Background Blobs -->
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
+    <div class="background-blob blob-3"></div>
 
-    <nav class="nav">
-        <div class="nav-content">
-            <div class="logo">EV</div>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-content">
+            <a href="#hero" class="logo text-gradient">EV</a>
             <ul class="nav-links">
                 <li><a href="#about"><i class="fas fa-user-alt"></i> About</a></li>
                 <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
                 <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
                 <li><a href="#certifications"><i class="fas fa-award"></i> Certifications</a></li>
+                <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
                 <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>ERAMEH VICTOR</h1>
-            <h2>Production Engineer | DevOps & Cloud Engineer | AI Enthusiast</h2>
-            <p class="hero-subtitle"><i class="fas fa-graduation-cap"></i> AWS CLF-C02 Certified <span style="margin: 0 10px;">|</span> <i class="fas fa-map-marker-alt"></i> Abuja, Nigeria</p>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container hero-content">
+            <div class="hero-avatar">
+                <img src="https://via.placeholder.com/180/00e0ff/8a2be2?text=EV" alt="Erameh Victor"> <!-- Placeholder Image, replace with your actual photo -->
+            </div>
+            <h1>Hello, I'm <span>ERAMEH VICTOR</span></h1>
+            <h2>Next-Gen Production Engineer | DevOps & Cloud Specialist | AI Innovator</h2>
+            <div class="typing-container">
+                <p class="typing-effect"></p>
+            </div>
+            <div class="hero-subtitle-meta">
+                <span><i class="fas fa-award"></i> AWS CLF-C02 Certified</span>
+                <span><i class="fas fa-map-marker-alt"></i> Abuja, Nigeria</span>
+            </div>
             <div class="cta-buttons">
-                <a href="#contact" class="btn btn-primary"><i class="fas fa-handshake"></i> Get In Touch</a>
-                <a href="https://github.com/erameh6" target="_blank" class="btn btn-secondary"><i class="fab fa-github"></i> View GitHub</a>
+                <a href="#contact" class="btn btn-primary"><span><i class="fas fa-handshake"></i> Let's Connect</span></a>
+                <a href="https://github.com/erameh6" target="_blank" class="btn btn-secondary"><span><i class="fab fa-github"></i> View GitHub</span></a>
             </div>
         </div>
     </section>
 
-    <section id="about" class="section">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-            <div class="about-text">
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-gradient">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I am a forward-thinking Production Engineer with a deep-seated passion for transforming complex systems through **DevOps methodologies, cutting-edge Cloud Computing, and intelligent AI solutions.** Holding a Bachelor's degree in Production Engineering from the University of Benin, my background bridges robust traditional engineering principles with the agility and scalability of modern tech.
+                    </p>
+                    <p>
+                        My role as an Operational Specialist at Abuja Metropolitan Management Council involves optimizing infrastructure and leveraging engineering insights for municipal development. Concurrently, as a remote DevOps Engineer at LiveDigitalPro, I architect, automate, and streamline deployment pipelines, ensuring high availability and seamless scalability in cloud environments.
+                    </p>
+                    <p>
+                        Beyond core engineering, I actively explore fields like **3D printing, machine learning, and industrial automation.** My commitment extends to community initiatives, including active involvement with the Nigerian Red Cross Society, reflecting a holistic approach to problem-solving and impact. I thrive on continuous learning and applying innovative solutions to real-world challenges.
+                    </p>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line stat-icon"></i>
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-cogs stat-icon"></i>
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Technologies Mastered</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-globe-americas stat-icon"></i>
+                        <div class="stat-number aws-fix">AWS</div>
+                        <div class="stat-label">Certified</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hands-helping stat-icon"></i>
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Community Roles</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-gradient">Work & Research</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Operational Specialist</h3>
+                            <p class="experience-company"><i class="fas fa-building"></i> Abuja Metropolitan Management Council</p>
+                            <p class="experience-duration"><i class="far fa-calendar-alt"></i> Oct 2023 - June 2024</p>
+                        </div>
+                        <span class="experience-type">Full-time</span>
+                    </div>
+                    <p class="experience-description">
+                        Instrumental in the Department of Development Control, focusing on the analysis and optimization of machinery crucial for daily infrastructure management within the Abuja Municipal area. Applied core engineering principles to significantly enhance operational efficiency and infrastructure reliability.
+                    </p>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">DevOps Engineer (Remote)</h3>
+                            <p class="experience-company"><i class="fas fa-laptop-code"></i> LiveDigitalPro</p>
+                            <p class="experience-duration"><i class="far fa-calendar-alt"></i> Jan 2020 - Present</p>
+                        </div>
+                        <span class="experience-type">Part-time</span>
+                    </div>
+                    <p class="experience-description">
+                        Led as Project Manager, orchestrating comprehensive training sessions for interns via interactive virtual conferences. Fostered robust cross-functional team collaboration, contributing to a 10% increase in project success rates. Consistently delivered constructive feedback and rigorous progress monitoring to ensure high-quality project outcomes.
+                    </p>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Workshop Assistant & Researcher</h3>
+                            <p class="experience-company"><i class="fas fa-university"></i> University of Benin - Engineering Foundry Shop</p>
+                            <p class="experience-duration"><i class="far fa-calendar-alt"></i> 2018 - 2021</p>
+                        </div>
+                        <span class="experience-type">Research</span>
+                    </div>
+                    <p class="experience-description">
+                        Conducted pivotal hands-on research within the engineering foundry shop, acquiring practical expertise in advanced casting processes. Executed detailed material analysis of diverse metals and alloys, while actively engaging in optimizing foundry operations for improved efficiency and product quality.
+                    </p>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div>
+                            <h3 class="experience-title">Arc Welding Shop Intern</h3>
+                            <p class="experience-company"><i class="fas fa-building"></i> University of Benin Estate Management</p>
+                            <p class="experience-duration"><i class="far fa-calendar-alt"></i> Mar 2019 - Aug 2019</p>
+                        </div>
+                        <span class="experience-type">Internship</span>
+                    </div>
+                    <p class="experience-description">
+                        Actively participated in complex welding projects, encompassing structural fabrication, component repair, and precision welding. Proficiently utilized a wide array of tools and equipment, while concurrently researching advanced welding techniques and in-depth material properties.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-gradient">Technical Arsenal</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Bash/Shell Scripting</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">GitOps</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Programming & Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Go (Golang)</span>
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">RESTful APIs</span>
+                        <span class="skill-tag">Monitoring (Prometheus/Grafana)</span>
+                        <span class="skill-tag">Databases (SQL/NoSQL)</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-robot"></i> AI & Machine Learning</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Neural Networks</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">Data Preprocessing</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-drafting-compass"></i> Design & Engineering</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AutoCAD</span>
+                        <span class="skill-tag">Blender 3D</span>
+                        <span class="skill-tag">3D Modeling</span>
+                        <span class="skill-tag">3D Printing</span>
+                        <span class="skill-tag">SolidWorks</span>
+                        <span class="skill-tag">Product Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-gradient">Certifications & Accolades</h2>
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <h3 class="cert-title"><i class="fas fa-certificate"></i> AWS Certified Cloud Practitioner (CLF-C02)</h3>
+                    <p class="cert-issuer">Amazon Web Services</p>
+                </div>
+                <div class="cert-card">
+                    <h3 class="cert-title"><i class="fas fa-brain"></i> Deep Learning A-Z™</h3>
+                    <p class="cert-issuer">Hands-On Artificial Neural Networks</p>
+                </div>
+                <div class="cert-card">
+                    <h3 class="cert-title"><i class="fas fa-chart-area"></i> Machine Learning A-Z™</h3>
+                    <p class="cert-issuer">Hands-On Python & R In Data Science</p>
+                </div>
+                <div class="cert-card">
+                    <h3 class="cert-title"><i class="fas fa-medkit"></i> Certified First Aider</h3>
+                    <p class="cert-issuer">Nigerian Red Cross Society</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects / Initiatives Section (New) -->
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-gradient">Key Projects & Initiatives</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3>Automated CI/CD Pipeline for Microservices</h3>
+                    <p>Designed and implemented a robust CI/CD pipeline using Jenkins, Docker, and Kubernetes for seamless deployment of microservices on AWS. Achieved 70% faster deployment cycles and enhanced application stability.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fas fa-link"></i> Learn More</a>
+                        <a href="https://github.com/erameh6" target="_blank"><i class="fab fa-github"></i> GitHub Repo</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI-Powered Predictive Maintenance System</h3>
+                    <p>Developed a machine learning model to predict equipment failures in industrial settings, leveraging TensorFlow. Integrated with IoT sensors to provide real-time alerts, reducing downtime by 20%.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fas fa-link"></i> Case Study</a>
+                        <a href="https://github.com/erameh6" target="_blank"><i class="fab fa-github"></i> GitHub Repo</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon"><i class="fas fa-print"></i></div>
+                    <h3>Advanced 3D Printing & Prototyping Initiative</h3>
+                    <p>Led a research project on optimizing additive manufacturing processes for complex geometries using Blender 3D for design and advanced material analysis for 3D printing, enhancing prototype accuracy and strength.</p>
+                    <div class="project-links">
+                        <a href="#" target="_blank"><i class="fas fa-link"></i> Project Details</a>
+                        <a href="https://github.com/erameh6" target="_blank"><i class="fab fa-github"></i> GitHub Repo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-gradient">Let's Connect</h2>
+            <div class="contact-content">
                 <p>
-                    I'm a Production Engineer with a passion for DevOps, Cloud Computing, and Artificial Intelligence. 
-                    With a Bachelor's degree in Production Engineering from the University of Benin, I bring a unique 
-                    blend of traditional engineering expertise and modern cloud-native technologies.
+                    I am actively seeking opportunities for impactful collaborations, challenging projects, and roles where I can leverage my expertise in DevOps, Cloud Engineering, and AI. Feel free to reach out—I'm always excited to discuss innovative solutions!
                 </p>
-                <p>
-                    Currently serving as an Operational Specialist at Abuja Metropolitan Management Council and 
-                    working remotely as a DevOps Engineer at LiveDigitalPro, I specialize in optimizing infrastructure, 
-                    automating deployments, and implementing scalable cloud solutions.
-                </p>
-                <p>
-                    My journey includes hands-on experience with 3D printing, machine learning, and industrial automation, 
-                    complemented by active community involvement with the Nigerian Red Cross Society.
-                </p>
-            </div>
-            <div class="stats">
-                <div class="stat-card">
-                    <i class="fas fa-calendar-alt stat-icon"></i>
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-tools stat-icon"></i>
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">Technologies</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fab fa-aws stat-icon"></i>
-                    <div class="stat-number">AWS</div>
-                    <div class="stat-label">Certified</div>
-                </div>
-                 <div class="stat-card">
-                    <i class="fas fa-globe stat-icon"></i>
-                    <div class="stat-number">2+</div>
-                    <div class="stat-label">Projects Led</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="experience" class="section">
-        <h2 class="section-title">Work Experience</h2>
-        <div class="experience-grid">
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">Operational Specialist</h3>
-                        <p class="experience-company"><i class="fas fa-building"></i> Abuja Metropolitan Management Council</p>
-                        <p class="experience-duration"><i class="fas fa-clock"></i> Oct 2023 - June 2024</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i> <a href="mailto:victorerameh025@gmail.com">victorerameh025@gmail.com</a>
                     </div>
-                    <span class="experience-type">Full-time</span>
-                </div>
-                <p class="experience-description">
-                    Worked in the Department of Development Control analyzing and optimizing machinery for 
-                    day-to-day infrastructure management in the Abuja Municipal area. Leveraged engineering 
-                    expertise to improve operational efficiency and infrastructure reliability.
-                </p>
-            </div>
-
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">DevOps Engineer</h3>
-                        <p class="experience-company"><i class="fas fa-laptop-code"></i> LiveDigitalPro (Remote)</p>
-                        <p class="experience-duration"><i class="fas fa-clock"></i> Jan 2020 - Present</p>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i> <a href="tel:+2348109855770">+234 810 985 5770</a>
                     </div>
-                    <span class="experience-type">Part-time</span>
-                </div>
-                <p class="experience-description">
-                    Serve as Project Manager spearheading comprehensive training sessions for interns through 
-                    interactive Zoom conference calls. Collaborate with cross-functional teams, enhancing project 
-                    success rates by 10%. Provide constructive feedback and monitor progress to ensure quality 
-                    deliverables.
-                </p>
-            </div>
-
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">Workshop Assistant & Researcher</h3>
-                        <p class="experience-company"><i class="fas fa-flask"></i> University of Benin - Engineering Foundry Shop</p>
-                        <p class="experience-duration"><i class="fas fa-clock"></i> 2018 - 2021</p>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i> Abuja, Nigeria
                     </div>
-                    <span class="experience-type">Research</span>
                 </div>
-                <p class="experience-description">
-                    Conducted hands-on research in engineering foundry shop, gaining practical experience in casting 
-                    processes. Performed detailed analysis of various metals and alloys, and engaged in optimizing 
-                    foundry processes to improve efficiency and quality.
-                </p>
-            </div>
-
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">Arc Welding Shop Intern</h3>
-                        <p class="experience-company"><i class="fas fa-hammer"></i> University of Benin Estate Management</p>
-                        <p class="experience-duration"><i class="fas fa-clock"></i> Mar 2019 - Aug 2019</p>
-                    </div>
-                    <span class="experience-type">Internship</span>
-                </div>
-                <p class="experience-description">
-                    Participated in welding projects, fabricating structures, repairing components, and welding with 
-                    precision. Utilized a range of tools and equipment while researching advanced welding techniques 
-                    and material properties.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="section">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">AWS</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">Kubernetes</span>
-                    <span class="skill-tag">Terraform</span>
-                    <span class="skill-tag">Linux</span>
-                    <span class="skill-tag">SSH</span>
-                    <span class="skill-tag">Ansible</span>
-                    <span class="skill-tag">CI/CD</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3><i class="fas fa-laptop-code"></i> Programming & Tools</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">Git & GitHub</span>
-                    <span class="skill-tag">Bash Scripting</span>
-                    <span class="skill-tag">WordPress</span>
-                    <span class="skill-tag">Excel</span>
-                    <span class="skill-tag">Jira</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3><i class="fas fa-brain"></i> AI & Machine Learning</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">Neural Networks</span>
-                    <span class="skill-tag">Machine Learning</span>
-                    <span class="skill-tag">Deep Learning</span>
-                    <span class="skill-tag">OpenCV</span>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3><i class="fas fa-drafting-compass"></i> Design & Engineering</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">AutoCAD</span>
-                    <span class="skill-tag">Blender 3D</span>
-                    <span class="skill-tag">3D Modeling</span>
-                    <span class="skill-tag">3D Printing</span>
-                    <span class="skill-tag">Fusion 360</span>
+                <div class="social-links">
+                    <a href="https://github.com/erameh6" target="_blank" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/erameh-victor" target="_blank" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" target="_blank" class="social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="certifications" class="section">
-        <h2 class="section-title">Certifications & Training</h2>
-        <div class="certifications-grid">
-            <div class="cert-card">
-                <h3 class="cert-title"><i class="fab fa-aws"></i> AWS Certified Cloud Practitioner (CLF-C02)</h3>
-                <p class="cert-issuer">Amazon Web Services</p>
-            </div>
-
-            <div class="cert-card">
-                <h3 class="cert-title"><i class="fas fa-brain"></i> Deep Learning A-Z™</h3>
-                <p class="cert-issuer">Hands-On Artificial Neural Networks</p>
-            </div>
-
-            <div class="cert-card">
-                <h3 class="cert-title"><i class="fas fa-robot"></i> Machine Learning A-Z™</h3>
-                <p class="cert-issuer">Hands-On Python & R In Data Science</p>
-            </div>
-
-            <div class="cert-card">
-                <h3 class="cert-title"><i class="fas fa-first-aid"></i> Certified First Aider</h3>
-                <p class="cert-issuer">Nigerian Red Cross Society</p>
-            </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Erameh Victor. Crafted with <i class="fas fa-heart" style="color: var(--color-accent);"></i> and precision.</p>
         </div>
-    </section>
-
-    <section id="contact" class="section">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-content">
-            <p style="color: var(--text-muted); font-size: 1.15rem; margin-bottom: 2rem;">
-                I'm always open to discussing new opportunities, collaborations, or interesting projects. 
-                Feel free to reach out!
-            </p>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i> <a href="mailto:victorerameh025@gmail.com">victorerameh025@gmail.com</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone-alt"></i> <a href="tel:+2348109855770">+234 810 985 5770</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i> Abuja, Nigeria
-                </div>
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/erameh6" target="_blank" class="social-link" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/erameh-victor" target="_blank" class="social-link" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://twitter.com/erameh_victor" target="_blank" class="social-link" title="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Erameh Victor. Built with passion and precision.</p>
     </footer>
 
+    <!-- JavaScript for dynamic effects -->
     <script>
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
-                const target = document.querySelector(targetId);
-                if (target) {
-                    // Adjust scroll position to account for fixed header
-                    const headerOffset = document.querySelector('.nav').offsetHeight;
-                    const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-                    const offsetPosition = elementPosition - headerOffset - 20; // Added extra padding
-
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY - (window.innerWidth <= 768 ? 80 : 100); // Adjust for fixed navbar
                     window.scrollTo({
-                        top: offsetPosition,
+                        top: offsetTop,
                         behavior: 'smooth'
                     });
-
-                    // Update active class for nav links
-                    document.querySelectorAll('.nav-links a').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    this.classList.add('active');
                 }
             });
         });
 
-        // Add scroll animation for sections
+        // Navbar shrink on scroll and active link highlighting
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('section');
+
+        function updateNavbar() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            let currentActive = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - (window.innerWidth <= 768 ? 100 : 120); // Adjust offset for navbar height
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentActive = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(currentActive)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateNavbar);
+        window.addEventListener('load', updateNavbar); // Update on load to set initial active state
+
+        // Typing effect for Hero Section
+        const typingElement = document.querySelector('.typing-effect');
+        const phrases = [
+            "Optimizing infrastructure for peak performance.",
+            "Building scalable cloud solutions with AWS.",
+            "Automating deployments and streamlining workflows.",
+            "Leveraging AI for smarter engineering.",
+            "Innovating at the intersection of production and technology."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100; // milliseconds per character
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                typingElement.textContent = currentPhrase.substring(0, charIndex--);
+            } else {
+                typingElement.textContent = currentPhrase.substring(0, charIndex++);
+            }
+
+            let delay = typingSpeed;
+            if (isDeleting) {
+                delay /= 2; // Faster deletion
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length + 1) {
+                delay = 1500; // Pause at end of phrase
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                delay = 500; // Pause before typing next phrase
+            }
+
+            setTimeout(type, delay);
+        }
+
+        document.addEventListener('DOMContentLoaded', type); // Start typing when DOM is ready
+
+        // Section scroll animations (using Intersection Observer)
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px' // Start animation a bit before reaching the section
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2 // Trigger when 20% of the section is visible
         };
 
         const sectionObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    // Optional: Unobserve after animation to prevent re-triggering
-                    // observer.unobserve(entry.target);
-                } else {
-                    entry.target.classList.remove('is-visible'); // To re-animate on scroll back
+                    observer.unobserve(entry.target); // Stop observing once animated
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.section').forEach(section => {
+        document.querySelectorAll('.section-padding').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
             sectionObserver.observe(section);
         });
 
-        // Navbar shrink on scroll
-        const nav = document.querySelector('.nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) { // Adjust scroll threshold as needed
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
+        // Add a class for elements that should animate only when visible
+        .is-visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
 
-        // Set initial active nav link based on current hash
-        window.addEventListener('load', () => {
-            const currentHash = window.location.hash;
-            if (currentHash) {
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    if (link.getAttribute('href') === currentHash) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            } else {
-                // If no hash, set "About" as active by default
-                document.querySelector('.nav-links a[href="#about"]').classList.add('active');
-            }
-        });
-
-        // Update active nav link on scroll
-        const updateActiveNavLink = () => {
-            const sections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            let currentActive = null;
-
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                // Check if the section is within the viewport, accounting for the header
-                if (rect.top <= nav.offsetHeight + 50 && rect.bottom >= nav.offsetHeight + 50) {
-                    currentActive = section.id;
+        // Specific animation for Experience Cards (staggered)
+        const experienceCards = document.querySelectorAll('.experience-card');
+        const experienceObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0) rotateX(0) rotateY(0) scale(1)';
+                    observer.unobserve(entry.target);
                 }
             });
+        }, { threshold: 0.1 });
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentActive}`) {
-                    link.classList.add('active');
+        experienceCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateX(-50px) rotateX(10deg) rotateY(10deg) scale(0.95)'; /* Initial state */
+            card.style.transition = `opacity 0.6s ease-out ${index * 0.15}s, transform 0.6s ease-out ${index * 0.15}s`;
+            experienceObserver.observe(card);
+        });
+
+        // Specific animation for Stat Cards (staggered)
+        const statCards = document.querySelectorAll('.stat-card');
+        const statObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                    observer.unobserve(entry.target);
                 }
             });
-        };
+        }, { threshold: 0.1 });
 
-        window.addEventListener('scroll', updateActiveNavLink);
-        window.addEventListener('resize', updateActiveNavLink); // Also update on resize
+        statCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px) scale(0.9)'; /* Initial state */
+            card.style.transition = `opacity 0.5s ease-out ${index * 0.1}s, transform 0.5s ease-out ${index * 0.1}s`;
+            statObserver.observe(card);
+        });
     </script>
 </body>
 </html>
